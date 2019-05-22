@@ -1,0 +1,11 @@
+{
+  "catalogues": [{
+      "name": "Vero",
+      "type": "groceries"
+    },
+    {
+      "name": "Mr.Bricolage",
+      "type": "toolsets"
+    }
+  ]
+}

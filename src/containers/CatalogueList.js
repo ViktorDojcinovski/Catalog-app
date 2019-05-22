@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import axios from "axios";
 
 import CatalogueAbstract from "../components/CatalogueAbstract";
 
@@ -13,23 +14,18 @@ const StyledWrapper = styled.section`
 class CatalogueList extends Component {
   constructor(props) {
     super(props);
-    this.catalogues = [
-      {
-        name: "Vero",
-        type: "grocery"
-      },
-      {
-        name: "Mr.Bricolage",
-        type: "toolkits"
-      },
-      {
-        name: "",
-        type: ""
-      }
-    ];
+    this.state = {
+      catalogues: []
+    };
+  }
+  async componentDidMount() {
+    let response = await axios.get(
+      "http://localhost:3000/data/catalogues.json"
+    );
+    this.setState({ catalogues: response.data.catalogues });
   }
   render() {
-    let catalogAbstracts = this.catalogues.map((catalogue, id) => {
+    let catalogAbstracts = this.state.catalogues.map((catalogue, id) => {
       return (
         <CatalogueAbstract
           key={id}
