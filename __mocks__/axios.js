@@ -1,12 +1,12 @@
 const axiosMock = jest.genMockFromModule('axios');
 
 let mockResponse = {
-  data: {
-    "catalogues": [{
-      "name": "Test name",
-      "type": "Test type"
-    }]
-  }
+  data: [{
+    "id": 1,
+    "name": "Test name",
+    "type": "Test type",
+    "images": ["image_1.png", "image_2.png"]
+  }]
 }
 
 axiosMock.get.mockImplementation(req);

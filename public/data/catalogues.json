@@ -1,11 +1,15 @@
 {
   "catalogues": [{
+      "id": 1,
       "name": "Vero",
-      "type": "groceries"
+      "type": "groceries",
+      "images": ["image_1.png", "image_2.png"]
     },
     {
+      "id": 2,
       "name": "Mr.Bricolage",
-      "type": "toolsets"
+      "type": "toolsets",
+      "images": ["image_3.png", "image_4.png"]
     }
   ]
 }

@@ -1,0 +1,8 @@
+{
+  "catalogue": {
+    "id": 1,
+    "name": "Vero",
+    "type": "groceries",
+    "images": ["image_1.png", "image_2.png"]
+  }
+}

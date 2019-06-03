@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 import CatalogueAbstract from "../components/CatalogueAbstract";
 
@@ -19,19 +20,15 @@ class CatalogueList extends Component {
     };
   }
   async componentDidMount() {
-    let response = await axios.get(
-      "http://localhost:3000/data/catalogues.json"
-    );
-    this.setState({ catalogues: response.data.catalogues });
+    let response = await axios.get("http://localhost:8001/catalogues");
+    this.setState({ catalogues: response.data });
   }
   render() {
-    let catalogAbstracts = this.state.catalogues.map((catalogue, id) => {
+    let catalogAbstracts = this.state.catalogues.map(catalogue => {
       return (
-        <CatalogueAbstract
-          key={id}
-          name={catalogue.name}
-          type={catalogue.type}
-        />
+        <Link key={catalogue.id} to={"/catalogue/" + catalogue.id}>
+          <CatalogueAbstract name={catalogue.name} type={catalogue.type} />
+        </Link>
       );
     });
     return <StyledWrapper>{catalogAbstracts}</StyledWrapper>;

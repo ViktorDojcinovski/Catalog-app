@@ -1,26 +1,19 @@
 import React, { Component } from "react";
-import styled from "styled-components";
+import { Route, Switch } from "react-router-dom";
 
-import Header from "./containers/Header";
-import CatalogList from "./containers/CatalogueList";
-import Footer from "./components/Footer";
-
-const StyledWrapper = styled.div`
-  width: 600px;
-  margin: 10px auto;
-  padding: 0;
-  background-color: #f1f1f1;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
-`;
+import Layout from "./hoc/Layout";
+import CatalogueList from "./containers/CatalogueList";
+import Catalogue from "./containers/Catalogue";
 
 class App extends Component {
   render() {
     return (
-      <StyledWrapper>
-        <Header />
-        <CatalogList />
-        <Footer />
-      </StyledWrapper>
+      <Layout>
+        <Switch>
+          <Route path="/catalogue/:id" component={Catalogue} />
+          <Route path="/" exact component={CatalogueList} />
+        </Switch>
+      </Layout>
     );
   }
 }
