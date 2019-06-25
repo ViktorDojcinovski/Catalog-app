@@ -2,22 +2,50 @@ import React, { Component } from "react";
 import styled from "styled-components";
 
 import Logo from "../components/Logo";
-import MainSearch from "../components/MainSearch";
 import MainMenu from "../components/MainMenu";
 
 const StyledWrapper = styled.div`
-  overflow: auto;
-  background-color: rgba(0, 0, 255, 0.2);
-  padding: 10px;
+  background-color: rgba(255, 255, 255, 1);
+  padding: 10px 10px 0 10px;
+  box-shadow: 0 4px 4px -2px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
+`;
+
+const LogoHolder = styled.div`
+  overflow: visible;
+  clear: both;
+  max-width: 1210px;
+  margin: 0 auto;
+`;
+
+const MenuHolder = styled.div`
+  max-width: 1210px;
+  margin: 0 auto;
 `;
 
 class Header extends Component {
+  constructor(props) {
+    super(props);
+    this.toggle = this.toggle.bind(this);
+    this.state = {
+      dropdownOpen: false
+    };
+  }
+  toggle() {
+    this.setState({
+      dropdownOpen: !this.state.dropdownOpen
+    });
+  }
   render() {
     return (
       <StyledWrapper>
-        <Logo />
-        <MainSearch />
-        <MainMenu />
+        <MenuHolder>
+          <MainMenu />
+        </MenuHolder>
+        <LogoHolder>
+          <Logo />
+          <div style={{ clear: "both" }} />
+        </LogoHolder>
       </StyledWrapper>
     );
   }

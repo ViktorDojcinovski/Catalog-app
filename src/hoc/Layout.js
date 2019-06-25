@@ -1,20 +1,13 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 
-import Header from "../containers/Header";
-import Footer from "../components/Footer";
-
-const StyledWrapper = styled.div``;
+const StyledWrapper = styled.div`
+  background-color: rgba(180, 180, 180, 0.01);
+`;
 
 class Layout extends Component {
   render() {
-    return (
-      <StyledWrapper>
-        <Header />
-        {this.props.children}
-        <Footer />
-      </StyledWrapper>
-    );
+    return <StyledWrapper> {this.props.children} </StyledWrapper>;
   }
 }
 
