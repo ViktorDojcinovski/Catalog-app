@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import styled from "styled-components";
-import { NavLink } from "react-router-dom";
+import React, { Component } from 'react';
+import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
 
 const StyledWrapper = styled.div`
   text-align: center;
   padding: 10px 10px 0 10px;
-  width: 400px;
+  width: 100%;
   margin-left: auto;
   text-align: center;
 `;
@@ -31,7 +31,7 @@ const StyledListElement = styled.li`
     font-weight: bold;
     line-height: 16px;
     &:after {
-      content: "";
+      content: '';
       position: absolute;
       bottom: 0;
       left: 0;
@@ -50,39 +50,45 @@ class MainMenu extends Component {
       <StyledWrapper>
         <StyledList>
           <StyledListElement>
-            <NavLink to="/admin" activeClassName="is-active">
+            <NavLink to='/admin' activeClassName='is-active'>
               Home
             </NavLink>
           </StyledListElement>
           <StyledListElement>
-            <NavLink to="/admin/profile" activeClassName="is-active">
+            <NavLink to='/admin/profile' activeClassName='is-active'>
               Profile
             </NavLink>
           </StyledListElement>
           <StyledListElement>
-            <NavLink to="/admin/public" activeClassName="is-active">
+            <NavLink to='/admin/public' activeClassName='is-active'>
               Public
             </NavLink>
           </StyledListElement>
           {isAuthenticated() && (
             <StyledListElement>
-              <NavLink to="/admin/private" activeClassName="is-active">
-                Private
+              <NavLink to='/admin/new-catalogue' activeClassName='is-active'>
+                New Catalogue
               </NavLink>
             </StyledListElement>
           )}
-          {isAuthenticated() && userHasScopes(["read:courses"]) && (
+          {isAuthenticated() && (
             <StyledListElement>
-              <NavLink to="/admin/course" activeClassName="is-active">
+              <NavLink to='/admin/catalog-list' activeClassName='is-active'>
+                Catalog List
+              </NavLink>
+            </StyledListElement>
+          )}
+          {isAuthenticated() && userHasScopes(['read:courses']) && (
+            <StyledListElement>
+              <NavLink to='/admin/course' activeClassName='is-active'>
                 Courses
               </NavLink>
             </StyledListElement>
           )}
           <StyledListElement>
             <button onClick={isAuthenticated() ? logout : login}>
-              {" "}
-              {isAuthenticated() ? "Log Out" : "Log In"}{" "}
-            </button>{" "}
+              {isAuthenticated() ? 'Log Out' : 'Log In'}
+            </button>
           </StyledListElement>
         </StyledList>
       </StyledWrapper>

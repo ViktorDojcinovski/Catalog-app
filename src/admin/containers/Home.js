@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
-import AuthContext from "./AuthContext";
-import Auth from "./Auth/Auth";
+import AuthContext from '../Auth/AuthContext';
+import Auth from '../Auth/Auth';
 
 class Home extends Component {
   constructor(props) {
@@ -18,7 +18,7 @@ class Home extends Component {
       <div>
         <h1> Home </h1>
         {isAuthenticated() ? (
-          <Link to="/admin/profile"> View profile </Link>
+          <Link to='/admin/profile'> View profile </Link>
         ) : (
           <button onClick={login}> Log In </button>
         )}

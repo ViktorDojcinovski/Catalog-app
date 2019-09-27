@@ -1,5 +1,6 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
+import Moment from 'react-moment';
 
 const StyledWrapper = styled.section`
   position: relative;
@@ -30,6 +31,7 @@ const StyledHeader = styled.h2`
   color: black;
   font-size: 16px;
   line-height: 1.2em;
+  font-weight: bold;
   text-align: left;
   position: absolute;
   top: 225px;
@@ -38,31 +40,56 @@ const StyledHeader = styled.h2`
 `;
 
 const StyledParagraph = styled.p`
-  color: grey;
-  font-size: 14px;
-  line-height: 1.2em;
+  color: #444;
+  font-size: 0.8rem;
+  line-height: 1rem;
+  font-weight: bold;
   text-align: left;
-  position: relative;
-  top: 255px;
+  position: absolute;
+  top: 245px;
   padding-left: 20px;
 `;
 
+const StyledDates = styled.div`
+  position: absolute;
+  top: 275px;
+  padding-left: 20px;
+  p {
+    text-align: left;
+    color: #777;
+    font-size: 0.8rem;
+    line-height: 0.8rem;
+    margin-bottom: 2px;
+  }
+`;
+
 function CatalogueAbstract(props) {
-  let header, type, image_folder;
+  let header, type, image_folder, startDate, endDate;
   if (props) {
     image_folder = !props.image_folder
-      ? "Test image folder"
-      : "http://localhost:8001/catalogues/" +
+      ? 'Test image folder'
+      : 'http://localhost:8001/catalogues/' +
         props.image_folder +
-        "/images/image_1.jpg";
-    header = !props.name ? "Test phase header" : props.name;
-    type = !props.type ? "Test phase type" : props.type;
+        '/images/' +
+        props.front_image;
+    header = !props.name ? 'Test phase header' : props.name;
+    type = !props.type ? 'Test phase type' : props.type;
+    startDate = !props.startDate ? 'Test phase date' : props.startDate;
+    endDate = !props.endDate ? 'Test phase date' : props.endDate;
   }
   return (
     <StyledWrapper>
       <StyledImage src={image_folder} />
-      <StyledHeader> {header} </StyledHeader>{" "}
-      <StyledParagraph> {type} </StyledParagraph>{" "}
+      <StyledHeader> {header} </StyledHeader>
+      <StyledParagraph> {type} </StyledParagraph>
+      <StyledDates>
+        <p>
+          from <Moment format='DD.MM.YYYY'>{startDate}</Moment>
+        </p>
+        <p>
+          to <Moment format='DD.MM.YYYY'>{endDate}</Moment>
+        </p>
+      </StyledDates>
     </StyledWrapper>
   );
 }

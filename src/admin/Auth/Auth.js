@@ -65,7 +65,7 @@ class Auth {
   logout = () => {
     this.auth0.logout({
       clientID: process.env.REACT_APP_AUTH0_CLIENT_ID,
-      returnTo: "http://localhost:3002/admin"
+      returnTo: process.env.REACT_APP_LOGOUT_REDIRECT_URL
     })
   }
 

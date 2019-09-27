@@ -1,18 +1,19 @@
-import React, { Component } from "react";
-import { Route } from "react-router-dom";
-import styled from "styled-components";
+import React, { Component } from 'react';
+import { Route } from 'react-router-dom';
+import styled from 'styled-components';
 
-import Home from "./Home";
-import Profile from "./Profile";
-import Callback from "./Callback";
-import AdminHeader from "./AdminHeader";
-import Public from "./Public";
-import Private from "./Private";
-import Courses from "./Courses";
-import Auth from "./Auth/Auth";
-import PrivateRoute from "./PrivateRoute";
+import Auth from './Auth/Auth';
+import AdminHeader from './components/AdminHeader';
+import Home from './containers/Home';
+import Profile from './components/Profile';
+import Callback from './components/Callback';
+import Public from './components/Public';
+import PrivateRoute from './components/PrivateRoute';
+import NewCatalogue from './containers/NewCatalogue/NewCatalogue';
+import CatalogList from './containers/CatalogList/CatalogList';
+import Courses from './components/Courses';
 
-import AuthContext from "./AuthContext";
+import AuthContext from './Auth/AuthContext';
 
 const StyledWrapper = styled.div`
   max-width: 1210px;
@@ -38,17 +39,24 @@ class Admin extends Component {
             exact
             render={props => <Home auth={auth} {...props} />}
           />
-          <Route path={route_prefix + "/public"} component={Public} />
+          <Route path={route_prefix + '/public'} component={Public} />
           <Route
-            path={route_prefix + "/callback"}
+            path={route_prefix + '/callback'}
             render={props => <Callback auth={auth} {...props} />}
           />
-          <PrivateRoute path={route_prefix + "/profile"} component={Profile} />
-          <PrivateRoute path={route_prefix + "/private"} component={Private} />
+          <PrivateRoute path={route_prefix + '/profile'} component={Profile} />
           <PrivateRoute
-            path={route_prefix + "/course"}
+            path={route_prefix + '/new-catalogue'}
+            component={NewCatalogue}
+          />
+          <PrivateRoute
+            path={route_prefix + '/catalog-list'}
+            component={CatalogList}
+          />
+          <PrivateRoute
+            path={route_prefix + '/course'}
             component={Courses}
-            scopes={["read:courses"]}
+            scopes={['read:courses']}
           />
         </StyledWrapper>
       </AuthContext.Provider>

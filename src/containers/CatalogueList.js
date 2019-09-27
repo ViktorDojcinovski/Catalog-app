@@ -1,18 +1,18 @@
-import React, { Component } from "react";
-import styled from "styled-components";
-import axios from "axios";
-import { Link } from "react-router-dom";
+import React, { Component } from 'react';
+import styled from 'styled-components';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 import {
   ButtonDropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem
-} from "reactstrap";
+} from 'reactstrap';
 
-import Header from "./Header";
-import Footer from "../components/Footer";
-import MainSearch from "../components/MainSearch";
-import CatalogueAbstract from "../components/CatalogueAbstract";
+import Header from './Header';
+import Footer from '../components/Footer';
+import MainSearch from '../components/MainSearch';
+import CatalogueAbstract from '../components/CatalogueAbstract';
 
 const StyledWrapper = styled.section`
   margin: 30px auto;
@@ -42,7 +42,7 @@ const StyledListWrapper = styled.section`
   padding: 10px;
   text-align: center;
   min-height: calc(100vh - 275px);
-  max-width: 992px;
+  max-width: 1200px;
   margin: 0 auto;
 `;
 
@@ -65,12 +65,14 @@ class CatalogueList extends Component {
     super(props);
     this.toggle = this.toggle.bind(this);
     this.state = {
-      searchfield: "",
+      searchfield: '',
       catalogues: []
     };
   }
   async componentDidMount() {
-    let response = await axios.get("http://localhost:8001/catalogues");
+    let response = await axios.get(
+      `${process.env.REACT_APP_API_URL}/catalogues`
+    );
     this.setState({ catalogues: response.data });
   }
   onSearchCallback = event => {
@@ -88,13 +90,17 @@ class CatalogueList extends Component {
         .includes(this.state.searchfield.toLowerCase());
     });
     let catalogAbstracts = filteredCatalogues.map(catalogue => {
+      console.log(catalogue);
       return (
-        <Link key={catalogue.id} to={"/catalogue/" + catalogue.id}>
+        <Link key={catalogue.id} to={'/catalogue/' + catalogue._id}>
           <CatalogueAbstract
             name={catalogue.name}
             type={catalogue.type}
             image_folder={catalogue.image_folder}
-          />{" "}
+            front_image={catalogue.filesNames[0].image}
+            startDate={catalogue.startDate}
+            endDate={catalogue.endDate}
+          />
         </Link>
       );
     });
@@ -102,21 +108,21 @@ class CatalogueList extends Component {
       <StyledWrapper>
         <Header />
         <StyledSearchBar>
-          <MainSearch onSearchChange={this.onSearchCallback} />{" "}
+          <MainSearch onSearchChange={this.onSearchCallback} />
           <StyledButtonDropdown
             isOpen={this.state.dropdownOpen}
             toggle={this.toggle}
           >
-            <StyledDropdownToggle caret> By Category </StyledDropdownToggle>{" "}
+            <StyledDropdownToggle caret> By Category </StyledDropdownToggle>
             <DropdownMenu>
-              <DropdownItem header> Header </DropdownItem>{" "}
-              <DropdownItem disabled> Action </DropdownItem>{" "}
-              <DropdownItem> Another Action </DropdownItem>{" "}
+              <DropdownItem header> Header </DropdownItem>
+              <DropdownItem disabled> Action </DropdownItem>
+              <DropdownItem> Another Action </DropdownItem>
               <DropdownItem divider />
-              <DropdownItem> Another Action </DropdownItem>{" "}
-            </DropdownMenu>{" "}
-          </StyledButtonDropdown>{" "}
-        </StyledSearchBar>{" "}
+              <DropdownItem> Another Action </DropdownItem>
+            </DropdownMenu>
+          </StyledButtonDropdown>
+        </StyledSearchBar>
         <StyledListWrapper> {catalogAbstracts} </StyledListWrapper> <Footer />
       </StyledWrapper>
     );

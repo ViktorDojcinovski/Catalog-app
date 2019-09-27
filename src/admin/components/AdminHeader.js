@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import styled from "styled-components";
+import React, { Component } from 'react';
+import styled from 'styled-components';
 
-import Logo from "../components/Logo";
-import MainAdminMenu from "./MainAdminMenu";
+import Logo from '../../components/Logo';
+import MainAdminMenu from './MainAdminMenu';
 
 const StyledWrapper = styled.div`
   text-align: center;
@@ -20,7 +20,7 @@ const MenuHolder = styled.div`
 const LogoHolder = styled.div`
   overflow: visible;
   clear: both;
-  max-width: 1210px;
+  width: 200px;
   margin: 0 auto;
 `;
 
@@ -33,7 +33,7 @@ class AdminHeader extends Component {
         </MenuHolder>
         <LogoHolder>
           <Logo />
-          <div style={{ clear: "both" }} />
+          <div style={{ clear: 'both' }} />
         </LogoHolder>
       </StyledWrapper>
     );
