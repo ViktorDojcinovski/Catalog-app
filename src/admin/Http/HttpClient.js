@@ -8,25 +8,25 @@ export class HttpClient extends Component {
       auth: new Auth()
     };
   }
-  submitCatalogue(endpoint, data) {
+  submitCatalog(endpoint, data) {
     const method = 'POST';
     return this.fetchUber({ endpoint, method, data });
   }
-  getCatalogues(endpoint) {
+  getCatalogs(endpoint) {
     const method = 'GET';
     const data = null;
     return this.fetchUber({ endpoint, method, data });
   }
-  getCatalogue(endpoint) {
+  getCatalog(endpoint) {
     const method = 'GET';
     const data = null;
     return this.fetchUber({ endpoint, method, data });
   }
-  updateCatalogue(endpoint, data) {
+  updateCatalog(endpoint, data) {
     const method = 'PUT';
     return this.fetchUber({ endpoint, method, data });
   }
-  deleteCatalogue(endpoint, data) {
+  deleteCatalog(endpoint, data) {
     const method = 'DELETE';
     return this.fetchUber({ endpoint, method, data });
   }

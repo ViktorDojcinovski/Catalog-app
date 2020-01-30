@@ -9,7 +9,7 @@ let _accessToken = null;
 let _scopes = null;
 let _expiresAt = null;
 
-class Auth {
+export class Auth {
   constructor(history) {
     this.history = history;
     this.userProfile = null;
@@ -89,5 +89,3 @@ class Auth {
     return scopes.every(scope => grantedScopes.includes(scope));
   }
 }
-
-export default Auth;

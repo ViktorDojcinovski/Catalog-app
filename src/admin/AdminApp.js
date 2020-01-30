@@ -2,25 +2,28 @@ import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import styled from 'styled-components';
 
-import Auth from './Auth/Auth';
-import AdminHeader from './components/AdminHeader';
-import Home from './containers/Home';
-import Profile from './components/Profile';
-import Callback from './components/Callback';
-import Public from './components/Public';
-import PrivateRoute from './components/PrivateRoute';
-import NewCatalogue from './containers/NewCatalogue/NewCatalogue';
-import CatalogList from './containers/CatalogList/CatalogList';
+import { Auth } from './Auth/Auth';
+import { Dashboard } from './core/Dashboard';
+import { Home } from './Home/Home';
+import { Profile } from './Profile/Profile';
+import { Callback } from './Callback/Callback';
+import { PrivateRoute } from './components/PrivateRoute';
+import { NewCatalog } from './NewCatalog/NewCatalog';
+import { CatalogList } from './CatalogList/CatalogList';
 import Courses from './components/Courses';
 
-import AuthContext from './Auth/AuthContext';
+import { AuthContext } from './Auth/AuthContext';
 
 const StyledWrapper = styled.div`
-  max-width: 1210px;
-  margin: 40px auto;
+  position: relative;
+  left: 220px;
+  width: calc(100% - 220px);
+  min-height: 100vh;
+  padding: 30px;
+  background-color: #eee;
 `;
 
-class Admin extends Component {
+export class AdminApp extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -32,22 +35,21 @@ class Admin extends Component {
     const route_prefix = this.props.match.url;
     return (
       <AuthContext.Provider value={auth}>
-        <AdminHeader auth={auth} />
+        <Dashboard />
         <StyledWrapper>
           <Route
             path={route_prefix}
             exact
-            render={props => <Home auth={auth} {...props} />}
+            render={props => <Home {...props} />}
           />
-          <Route path={route_prefix + '/public'} component={Public} />
           <Route
             path={route_prefix + '/callback'}
-            render={props => <Callback auth={auth} {...props} />}
+            render={props => <Callback {...props} />}
           />
           <PrivateRoute path={route_prefix + '/profile'} component={Profile} />
           <PrivateRoute
-            path={route_prefix + '/new-catalogue'}
-            component={NewCatalogue}
+            path={route_prefix + '/new-catalog'}
+            component={NewCatalog}
           />
           <PrivateRoute
             path={route_prefix + '/catalog-list'}
@@ -63,5 +65,3 @@ class Admin extends Component {
     );
   }
 }
-
-export default Admin;

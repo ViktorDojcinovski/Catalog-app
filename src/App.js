@@ -1,36 +1,20 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import Layout from './hoc/Layout';
-import CatalogueList from './containers/CatalogueList';
-import Catalogue from './containers/Catalogue';
-import AdminApp from './admin/AdminApp';
-
-// Implement FontAwesome library
-// to be available App-wide
-import { library } from '@fortawesome/fontawesome-svg-core';
-import {
-  faWindowClose,
-  faImage,
-  faHeading,
-  faCode,
-  faFont,
-  faEdit,
-  faTrash
-} from '@fortawesome/free-solid-svg-icons';
-
-library.add(faWindowClose, faImage, faHeading, faCode, faFont, faEdit, faTrash);
+import { AppClient } from './AppClient';
+import { AppAdmin } from './adminApp/AppAdmin';
+import { ErrorBoundary } from './hoc/ErrorBoundary';
+import { admin_uri } from './common/app.constants';
 
 class App extends Component {
   render() {
     return (
-      <Layout>
+      <ErrorBoundary>
         <Switch>
-          <Route path='/catalogue/:id' component={Catalogue} />
-          <Route path='/' exact component={CatalogueList} />
-          <Route path='/admin' component={AdminApp} />
+          <Route path={`/${admin_uri}`} component={AppAdmin} />
+          <Route path='/' component={AppClient} />
         </Switch>
-      </Layout>
+      </ErrorBoundary>
     );
   }
 }
