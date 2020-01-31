@@ -75,7 +75,8 @@ export function CatalogAbstract(props) {
   if (props) {
     image_folder = !props.image_folder
       ? 'Test image folder'
-      : 'http://localhost:8001/catalogs/' +
+      : process.env.REACT_APP_API_URL +
+        '/catalogs/' +
         props.image_folder +
         '/images/' +
         props.front_image;
@@ -87,19 +88,19 @@ export function CatalogAbstract(props) {
   return (
     <StyledWrapper>
       <StyledImage src={image_folder} /> <StyledHeader> {header} </StyledHeader>
-      <StyledParagraph> {type} </StyledParagraph>
+      <StyledParagraph> {type} </StyledParagraph>{' '}
       <StyledDates>
         <p>
           <small>
-            from <Moment format='DD.MM.YYYY'>{startDate}</Moment>
-          </small>
-        </p>
+            from <Moment format='DD.MM.YYYY'> {startDate} </Moment>{' '}
+          </small>{' '}
+        </p>{' '}
         <p className='align-right'>
           <small>
-            to <Moment format='DD.MM.YYYY'>{endDate}</Moment>
-          </small>
-        </p>
-      </StyledDates>
+            to <Moment format='DD.MM.YYYY'> {endDate} </Moment>{' '}
+          </small>{' '}
+        </p>{' '}
+      </StyledDates>{' '}
     </StyledWrapper>
   );
 }
