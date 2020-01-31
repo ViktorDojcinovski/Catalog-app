@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-import FontAwesomeIco from '../../FontAwesome/FontAwesomeIcon';
+import { FontAwesomeIco } from '../../FontAwesome/FontAwesomeIcon';
 
 const StyledWrapper = styled.section`
   float: left;
@@ -22,7 +22,7 @@ const StyledWrapper = styled.section`
   }
 `;
 
-class ControlIcon extends Component {
+export class ControlIcon extends Component {
   onDragStart = event => {
     event.dataTransfer.setData('type', this.props.type);
   };
@@ -42,5 +42,3 @@ class ControlIcon extends Component {
     );
   }
 }
-
-export default ControlIcon;

@@ -13,6 +13,7 @@ import {
   checkValidity
 } from '../components/Helpers/formHelpers';
 import { Auth } from '../Auth/Auth';
+import { admin_uri } from '../../common/app.constants';
 
 const StyledWrapper = styled.div`
   overflow: auto;
@@ -117,7 +118,6 @@ export class NewCatalog extends Component {
       auth: new Auth(),
       message: '',
       error: '',
-      editMode: false,
       loading: false,
       redirect: false,
       files: [],
@@ -160,14 +160,18 @@ export class NewCatalog extends Component {
         }
       }
     };
+
+    this.query = new URLSearchParams(this.props.location.search);
+    this.editMode = this.props.location.state.editMode;
   }
 
-  componentWillMount() {
-    const query = new URLSearchParams(this.props.location.search);
+  componentDidMount() {
+    this.props.auth.getProfile((profile, error) => {
+      this.partnerEmail = profile.email;
+    });
 
-    for (let p of query.entries()) {
+    for (let p of this.query.entries()) {
       if (p[0] && p[0] === 'catalogId') {
-        this.setState({ editMode: true });
         this.catalogId = p[1];
 
         // assume that in edit mode the values in the form fields are valid
@@ -189,13 +193,8 @@ export class NewCatalog extends Component {
         });
       }
     }
-  }
 
-  componentDidMount() {
-    this.props.auth.getProfile((profile, error) => {
-      this.partnerEmail = profile.email;
-    });
-    if (this.state.editMode) {
+    if (this.props.location.state.editMode) {
       fetch(`${process.env.REACT_APP_API_URL}/catalog/${this.catalogId}`, {
         method: 'GET',
         headers: {
@@ -242,7 +241,7 @@ export class NewCatalog extends Component {
     // must not write catalog without owner
     if (this.partnerEmail) {
       this.setState({ loading: true });
-      if (!this.state.editMode) {
+      if (!this.props.location.state.editMode) {
         fetch(`${process.env.REACT_APP_API_URL}/admin/saveCatalog`, {
           method: 'POST',
           headers: {
@@ -286,7 +285,7 @@ export class NewCatalog extends Component {
 
   renderRedirect = () => {
     if (this.state.redirect) {
-      return <Redirect to='/admin/catalog-list' />;
+      return <Redirect to={`/${admin_uri}/catalog-list`} />;
     }
   };
 

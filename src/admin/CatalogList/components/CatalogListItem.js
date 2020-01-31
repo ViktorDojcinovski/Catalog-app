@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 
-import { EditCatalogControls } from '../../components/UI/Controls/EditCatalogControls';
+import { EditCatalogControl } from '../../components/UI/Controls/EditCatalogControl';
 
 const StyledListItem = styled.section`
   & > div {
@@ -36,21 +36,23 @@ const StyledListItem = styled.section`
   }
 `;
 
-export const CatalogListItem = props => {
-  return (
-    <StyledListItem>
-      <div className='admin-area-content-section'>
-        <div className='list_item_name' onClick={props.editCatalog}>
-          {' '}
-          {props.name}{' '}
+export class CatalogListItem extends Component {
+  render() {
+    return (
+      <StyledListItem>
+        <div className='admin-area-content-section'>
+          <div className='list_item_name' onClick={this.props.editCatalog}>
+            {' '}
+            {this.props.name}{' '}
+          </div>{' '}
+          <div className='catalogControls'>
+            <EditCatalogControl
+              deleteHandler={this.props.deleteCatalog}
+              editHandler={this.props.editCatalog}
+            />{' '}
+          </div>{' '}
         </div>{' '}
-        <div className='catalogControls'>
-          <EditCatalogControls
-            deleteHandler={props.deleteCatalog}
-            editHandler={props.editCatalog}
-          />{' '}
-        </div>{' '}
-      </div>{' '}
-    </StyledListItem>
-  );
-};
+      </StyledListItem>
+    );
+  }
+}

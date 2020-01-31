@@ -4,7 +4,6 @@ import { AuthContext } from '../Auth/AuthContext';
 
 export class Callback extends Component {
   static contextType = AuthContext;
-
   componentDidMount() {
     //Handle authentiaction if expected values are in the URL
     if (/access_token|id_token|error/.test(this.props.location.hash)) {

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
 import { AuthContext } from '../Auth/AuthContext';
+import { admin_uri } from '../../common/app.constants';
 
 const StyledWrapper = styled.div`
   padding: 10px 10px 0 10px;
@@ -55,41 +56,44 @@ const StyledListElement = styled.li`
 
 export class MainAdminMenu extends Component {
   static contextType = AuthContext;
-
   render() {
-    const { isAuthenticated, login, logout, userHasScopes } = this.context;
+    const { isAuthenticated, login, logout } = this.context;
 
     return (
       <StyledWrapper>
         <StyledList>
           <StyledListElement>
-            <NavLink to='/admin' exact activeClassName='is-active'>
+            <NavLink to={`/${admin_uri}`} exact activeClassName='is-active'>
               Home{' '}
-            </NavLink>{' '}
-          </StyledListElement>{' '}
-          <StyledListElement>
-            <NavLink to='/admin/profile' activeClassName='is-active'>
-              Profile{' '}
             </NavLink>{' '}
           </StyledListElement>{' '}
           {isAuthenticated() && (
             <StyledListElement>
-              <NavLink to='/admin/new-catalog' activeClassName='is-active'>
+              <NavLink to={`/${admin_uri}/profile`} activeClassName='is-active'>
+                Profile{' '}
+              </NavLink>{' '}
+            </StyledListElement>
+          )}{' '}
+          {isAuthenticated() && (
+            <StyledListElement>
+              <NavLink
+                to={{
+                  pathname: `/${admin_uri}/new-catalog`,
+                  state: { editMode: false }
+                }}
+                activeClassName='is-active'
+              >
                 New Catalog{' '}
               </NavLink>{' '}
             </StyledListElement>
           )}{' '}
           {isAuthenticated() && (
             <StyledListElement>
-              <NavLink to='/admin/catalog-list' activeClassName='is-active'>
+              <NavLink
+                to={`/${admin_uri}/catalog-list`}
+                activeClassName='is-active'
+              >
                 Catalog List{' '}
-              </NavLink>{' '}
-            </StyledListElement>
-          )}{' '}
-          {isAuthenticated() && userHasScopes(['read:courses']) && (
-            <StyledListElement>
-              <NavLink to='/admin/course' activeClassName='is-active'>
-                Courses{' '}
               </NavLink>{' '}
             </StyledListElement>
           )}{' '}

@@ -343,7 +343,7 @@ export class Profile extends Component {
             connected to it.{' '}
           </p>{' '}
         </div>{' '}
-        <div class='editing admin-area-content-section'>
+        <div className='editing admin-area-content-section'>
           {' '}
           {customAvatarFormControl}{' '}
         </div>{' '}
@@ -393,7 +393,7 @@ export class Profile extends Component {
             />
           ))}{' '}
         </div>{' '}
-        <div class='action'>
+        <div className='action'>
           <Button
             btnType='success'
             clicked={() => this.submitPartnerInfo()}

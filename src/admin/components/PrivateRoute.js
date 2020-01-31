@@ -7,7 +7,6 @@ import { AuthContext } from '../Auth/AuthContext';
 export function PrivateRoute({ component: Component, scopes, ...rest }) {
   return (
     <AuthContext.Consumer>
-      {' '}
       {auth => (
         <Route
           {...rest}
@@ -27,7 +26,7 @@ export function PrivateRoute({ component: Component, scopes, ...rest }) {
             return <Component auth={auth} {...props} />;
           }}
         />
-      )}{' '}
+      )}
     </AuthContext.Consumer>
   );
 }

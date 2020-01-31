@@ -1,5 +1,7 @@
 import auth0 from 'auth0-js';
 
+import { admin_uri } from '../../common/app.constants';
+
 const REDIRECT_ON_LOGIN = "redirect_on_login";
 
 // Private variables for storing authentication based info in memory
@@ -36,7 +38,7 @@ export class Auth {
         this.setSession(authResult);
         this.history.push(redirectLocation);
       } else if (err) {
-        this.history.push("/admin");
+        this.history.push(`/${admin_uri}`);
         alert(`Error: ${err.error}. Check the console for further details!`);
         console.log(err);
       }
