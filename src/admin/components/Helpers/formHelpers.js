@@ -38,7 +38,7 @@ export function onChangedHandler(
     formIsValid: formIsValid
   });
 
-};
+}
 
 export function checkValidity(value, rules) {
   let isValid = true;

@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
+import React, { Component } from "react";
+import styled from "styled-components";
 
 const StyledInputWrapper = styled.div`
   float: left;
@@ -31,7 +31,7 @@ export class Input extends Component {
     let inputElement = null;
 
     switch (this.props.elementType) {
-      case 'input':
+      case "input":
         inputElement = (
           <input
             {...this.props.elementConfig}
@@ -40,7 +40,7 @@ export class Input extends Component {
           />
         );
         break;
-      case 'textarea':
+      case "textarea":
         inputElement = (
           <textarea
             {...this.props.elementConfig}
@@ -49,24 +49,25 @@ export class Input extends Component {
           />
         );
         break;
-      case 'select':
+      case "select":
         inputElement = (
           <select value={this.props.value} onChange={this.props.changed}>
-            {' '}
-            {this.props.elementConfig.options.map(option => (
+            {" "}
+            <option value="">Set type</option>
+            {this.props.elementConfig.options.map((option) => (
               <option key={option.value} value={option.value}>
-                {' '}
-                {option.displayValue}{' '}
+                {" "}
+                {option.displayValue}{" "}
               </option>
-            ))}{' '}
+            ))}{" "}
           </select>
         );
         break;
       default:
         inputElement = (
           <input
-            {...this.props.elementConfig}
             value={this.props.value}
+            {...this.props.elementConfig}
             onChange={this.props.changed}
           />
         );
@@ -74,7 +75,7 @@ export class Input extends Component {
 
     return (
       <StyledInputWrapper>
-        <label> {this.props.elementConfig.label} </label> {inputElement}{' '}
+        <label> {this.props.elementConfig.label} </label> {inputElement}{" "}
       </StyledInputWrapper>
     );
   }

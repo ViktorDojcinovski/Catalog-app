@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Moment from 'react-moment';
 import 'moment-timezone';
@@ -88,19 +89,27 @@ export function CatalogAbstract(props) {
   return (
     <StyledWrapper>
       <StyledImage src={image_folder} /> <StyledHeader> {header} </StyledHeader>
-      <StyledParagraph> {type} </StyledParagraph>{' '}
+      <StyledParagraph> {type} </StyledParagraph>
       <StyledDates>
         <p>
           <small>
-            from <Moment format='DD.MM.YYYY'> {startDate} </Moment>{' '}
-          </small>{' '}
-        </p>{' '}
+            from <Moment format='DD.MM.YYYY'> {startDate} </Moment>
+          </small>
+        </p>
         <p className='align-right'>
           <small>
-            to <Moment format='DD.MM.YYYY'> {endDate} </Moment>{' '}
-          </small>{' '}
-        </p>{' '}
-      </StyledDates>{' '}
+            to <Moment format='DD.MM.YYYY'> {endDate} </Moment>
+          </small>
+        </p>
+      </StyledDates>
     </StyledWrapper>
   );
 }
+
+CatalogAbstract.propTypes = {
+  image_folder: PropTypes.string,
+  front_imagename: PropTypes.string,
+  type: PropTypes.string.isRequired,
+  startDate: PropTypes.string.isRequired,
+  endDate: PropTypes.string.isRequired
+};

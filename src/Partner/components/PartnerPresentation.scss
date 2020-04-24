@@ -1,0 +1,81 @@
+section.main {
+  position: relative;
+  section.contentWrapper {
+    width: 100%;
+    padding: 20px;
+    @media screen and (min-width: 992px) {
+      position: relative;
+      width: 992px;
+      min-height: calc(100vh - 305px);
+      margin: 40px auto;
+    }
+
+    h3,
+    h4 {
+      width: 100%;
+      display: inline-block;
+      color: #aaa;
+      font-size: 1.2rem;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #eee;
+      text-align: left;
+      overflow: auto;
+    }
+    header {
+      background-color: #eee;
+      padding: 20px;
+      border-left: 5px solid #888;
+      margin-bottom: 20px;
+      overflow: auto;
+      img {
+        float: left;
+      }
+      h1 {
+        line-height: 40px;
+        float: left;
+      }
+    }
+    .customAvatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 20px;
+    }
+    .mediaWrapper {
+      margin: 0 auto;
+      overflow: auto;
+      .socialMediaWrapper,
+      .websiteWrapper {
+        width: calc(50% - 20px);
+        margin: 5px 10px;
+        padding: 10px;
+        float: left;
+      }
+    }
+    .description {
+      padding-top: 40px;
+      border-top: 1px solid #eee;
+      margin-top: 20px;
+    }
+    .partnerCatalogs {
+      width: 100%;
+      @media screen and (min-width: 992px) {
+        display: flex;
+        flex-direction: row;
+        justify-content: left;
+        align-content: flex-start;
+        flex-wrap: wrap;
+        overflow: auto;
+        padding: 10px;
+        text-align: center;
+        width: 992px;
+        margin: 40px auto;
+      }
+
+      h4 {
+        width: 100%;
+        text-align: left;
+      }
+    }
+  }
+}

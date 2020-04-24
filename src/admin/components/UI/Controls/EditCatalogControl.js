@@ -28,7 +28,6 @@ export const EditCatalogControl = props => {
   return (
     <StyledWrapper>
       <div>
-        {' '}
         {components.map(comp => {
           return (
             <ControlIcon

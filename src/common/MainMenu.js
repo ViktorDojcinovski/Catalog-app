@@ -1,23 +1,42 @@
-import React from 'react';
-import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
+import React, { useRef } from "react";
+import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { NavLink } from "react-router-dom";
 
 const StyledWrapper = styled.div`
-  text-align: center;
-  padding: 10px 10px 0 10px;
-  width: 500px;
-  margin-left: auto;
-  text-align: center;
+  width: 100%;
+  margin-left: 0;
+  @media screen and (min-width: 992px) {
+    text-align: center;
+    padding: 10px 10px 0 10px;
+    width: 500px;
+    margin-left: auto;
+    text-align: center;
+  }
 `;
 
 const StyledList = styled.ul`
-  overflow: auto;
-  clear: both;
+  position: relative;
   display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
-  overflow: auto;
-  width: 100%;
+  flex-direction: column;
+  background-color: rgba(255, 255, 255, 0.4);
+  width: 95vw;
+  padding: 0;
+  display: none;
+  &.show {
+    display: flex;
+  }
+  @media screen and (min-width: 992px) {
+    display: flex;
+    overflow: auto;
+    clear: both;
+    flex-direction: row;
+    flex-flow: row wrap;
+    justify-content: center;
+    overflow: auto;
+    width: 100%;
+  }
 `;
 const StyledListElement = styled.li`
   position: relative;
@@ -35,7 +54,7 @@ const StyledListElement = styled.li`
     font-weight: bold;
     line-height: 16px;
     &:after {
-      content: '';
+      content: "";
       position: absolute;
       bottom: 0;
       left: 0;
@@ -46,23 +65,43 @@ const StyledListElement = styled.li`
   }
 `;
 
+const Bars = styled.li`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  @media screen and (min-width: 992px) {
+    display: none;
+  }
+`;
+
 export function MainMenu() {
+  const links = useRef();
+
+  const onClick = () => {
+    console.log(links.current);
+    links.current.classList.toggle("show");
+  };
+
   return (
     <StyledWrapper>
-      <StyledList>
+      <StyledList ref={links}>
         <StyledListElement>
-          <NavLink to='/' exact activeClassName='is-active'>
+          <NavLink to="/" exact activeClassName="is-active">
             Latest Catalogs
           </NavLink>
         </StyledListElement>
         <StyledListElement>
-          <NavLink to='/magazines' activeClassName='is-active'>
+          <NavLink to="/magazines" activeClassName="is-active">
             Magazines
           </NavLink>
         </StyledListElement>
         <StyledListElement> About </StyledListElement>
         <StyledListElement> Contact </StyledListElement>
       </StyledList>
+      <Bars onClick={onClick}>
+        <FontAwesomeIcon icon={faBars} size="2x" />
+      </Bars>
     </StyledWrapper>
   );
 }

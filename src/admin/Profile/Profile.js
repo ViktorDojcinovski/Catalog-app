@@ -1,68 +1,17 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
+import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 
-import { Input } from '../../common/Input';
-import { Button } from '../../common/Button';
+import { Auth } from "../Auth/Auth";
+import { AuthContext } from "../Auth/AuthContext";
+import ProfilePresentation from "./components/ProfilePresentation";
 import {
   onChangedHandler,
-  checkValidity
-} from '../components/Helpers/formHelpers';
-import { Auth } from '../Auth/Auth';
+  checkValidity,
+} from "../components/Helpers/formHelpers";
+import withDashboard from "../../hoc/withDashboard";
 
-import { AuthContext } from '../Auth/AuthContext';
-
-const StyledWrapper = styled.section`
-  width: 100%;
-  overflow: auto;
-  > div.editing {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    width: calc(33.33% - 10px);
-    margin-right: 10px;
-    margin-top: 10px;
-    margin-bottom: 20px;
-    float: left;
-    &.last-child {
-      width: 33%;
-      margin-right: 0;
-    }
-    .customAvatarWrapper {
-      img {
-        width: 40px;
-        height: 40px;
-        margin-bottom: 20px;
-      }
-    }
-    textarea {
-      width: 100%;
-      max-width: 400px;
-    }
-    select {
-      width: 100%;
-      max-width: 400px;
-    }
-    input {
-      width: 100%;
-      max-width: 400px;
-    }
-  }
-  > div.action {
-    float: right;
-    width: 30%;
-    text-align: right;
-  }
-  div.success {
-    color: green;
-  }
-  div.false {
-    color: red;
-  }
-`;
-
-export class Profile extends Component {
+class Profile extends Component {
   static contextType = AuthContext;
-
   // FormData object for collecting whole data
   formData = new FormData();
 
@@ -70,135 +19,141 @@ export class Profile extends Component {
     auth: new Auth(),
     profile: null,
     customAvatar: {
-      name: '',
-      file: null
+      name: "",
+      file: null,
     },
     hasPartnerSignedInBefore: false,
-    err: '',
-    formIsValid: false,
+    err: "",
     loading: false,
-    message: { success: 'false', body: '' },
+    message: { success: "false", body: "" },
     partnerForm: {
       name: {
-        elementType: 'input',
+        elementType: "input",
         elementConfig: {
-          type: 'text',
-          label: 'Name',
-          placeholder: 'your preffered nickname...'
+          type: "text",
+          label: "Name",
+          placeholder: "your preffered nickname...",
         },
-        value: '',
+        value: "",
         validation: {
           required: true,
-          minLength: 5
+          minLength: 5,
         },
         valid: false,
-        touched: false
+        touched: false,
       },
       type: {
-        elementType: 'select',
+        elementType: "select",
         elementConfig: {
-          type: 'select',
-          label: 'Type',
-          placeholder: '',
+          type: "select",
+          label: "Type",
+          placeholder: "",
           options: [
-            { value: 'grocery', displayValue: 'Grocery' },
-            { value: 'toolkits', displayValue: 'Toolkits' }
-          ]
+            { value: "grocery", displayValue: "Grocery" },
+            { value: "toolkits", displayValue: "Toolkits" },
+          ],
         },
-        value: '',
+        value: "",
         validation: {
-          required: true
+          required: true,
         },
         valid: false,
-        touched: false
+        touched: false,
       },
       description: {
-        elementType: 'textarea',
+        elementType: "textarea",
         elementConfig: {
-          type: 'input',
-          label: 'Description',
-          placeholder: 'description of your bussiness...'
+          type: "input",
+          label: "Description",
+          placeholder: "description of your bussiness...",
         },
-        value: '',
+        value: "",
         validation: {
-          required: true
+          required: true,
         },
         valid: false,
-        touched: false
+        touched: false,
       },
       fb: {
-        elementType: 'input',
+        elementType: "input",
         elementConfig: {
-          type: 'text',
-          label: 'Facebook Funpage',
-          placeholder: 'your facebook funpage url...'
+          type: "text",
+          label: "Facebook Funpage",
+          placeholder: "your facebook funpage url...",
         },
-        value: '',
+        value: "",
         validation: {
-          minLength: 5
+          minLength: 5,
         },
         valid: false,
-        touched: false
+        touched: false,
       },
       twitter: {
-        elementType: 'input',
+        elementType: "input",
         elementConfig: {
-          type: 'text',
-          label: 'Twitter Account',
-          placeholder: 'your twitter account url...'
+          type: "text",
+          label: "Twitter Account",
+          placeholder: "your twitter account url...",
         },
-        value: '',
+        value: "",
         validation: {
-          minLength: 5
+          minLength: 5,
         },
         valid: false,
-        touched: false
+        touched: false,
       },
       website: {
-        elementType: 'input',
+        elementType: "input",
         elementConfig: {
-          type: 'text',
-          label: 'Your Website',
-          placeholder: 'your website url...'
+          type: "text",
+          label: "Your Website",
+          placeholder: "your website url...",
         },
-        value: '',
+        value: "",
         validation: {
-          minLength: 5
+          minLength: 5,
         },
         valid: false,
-        touched: false
-      }
-    }
+        touched: false,
+      },
+    },
   };
 
-  async componentDidMount() {
-    await this.loadUserProfile(() => {
+  constructor() {
+    super();
+
+    this.onChangedHandler = onChangedHandler.bind(this);
+    this.checkValidity = checkValidity.bind(this);
+    this.submitPartnerInfo = this.submitPartnerInfo.bind(this);
+    this.onChangeAvatar = this.onChangeAvatar.bind(this);
+  }
+
+  componentDidMount() {
+    this.loadUserProfile(() => {
       fetch(
         `${process.env.REACT_APP_API_URL}/admin/getPartner/${this.state.profile.email}`,
         {
-          method: 'POST',
+          method: "POST",
           headers: {
-            Authorization: `Bearer ${this.state.auth.getAccessToken()}`
+            Authorization: `Bearer ${this.state.auth.getAccessToken()}`,
           },
-          body: this.setColectedData(this.formData)
+          body: this.setColectedData(this.formData),
         }
       )
-        .then(response => {
-          return response.json();
-        })
-        .then(data => {
+        .then((res) => res.json())
+        .then((data) => {
           this.clearColectedData();
 
           if (data.email) {
             // assume that in edit mode the values in the form fields are valid,
             // so in  the for loop set values to all fields too true
             const updatedPartnerForm = {
-              ...this.state.partnerForm
+              ...this.state.partnerForm,
             };
 
             for (let inputIdentifier in updatedPartnerForm) {
               const updatedFormElement = {
-                ...updatedPartnerForm[inputIdentifier]
+                ...updatedPartnerForm[inputIdentifier],
               };
               updatedFormElement.valid = true;
               updatedPartnerForm[inputIdentifier] = updatedFormElement;
@@ -219,7 +174,7 @@ export class Profile extends Component {
               customAvatar: updatedAvatar,
               partnerForm: updatedPartnerForm,
               formIsValid: true,
-              hasPartnerSignedInBefore: true
+              hasPartnerSignedInBefore: true,
             });
           } else {
             this.setState({ hasPartnerSignedInBefore: false });
@@ -245,46 +200,41 @@ export class Profile extends Component {
 
   submitPartnerInfo() {
     this.setState({
-      message: {
-        success: 'false',
-        body: ''
-      }
+      message: { success: "false", body: "" },
     });
     fetch(`${process.env.REACT_APP_API_URL}/admin/updatePartner`, {
-      method: 'PUT',
+      method: "PUT",
       headers: {
-        Authorization: `Bearer ${this.context.getAccessToken()}`
+        Authorization: `Bearer ${this.context.getAccessToken()}`,
       },
-      body: this.setColectedData(this.formData)
+      body: this.setColectedData(this.formData),
     })
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         this.clearColectedData();
         this.setState({
           message: {
-            success: 'success',
-            body: data['message']
-          }
+            success: "success",
+            body: data["message"],
+          },
         });
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error);
       });
   }
 
   setColectedData(formData) {
-    formData.append('name', this.state.profile.name);
-    formData.append('avatar', this.state.profile.picture);
-    formData.append('prefferedName', this.state.partnerForm.name.value);
-    formData.append('bussinessType', this.state.partnerForm.type.value);
-    formData.append('customAvatar', this.state.customAvatar.file);
-    formData.append('fb', this.state.partnerForm.fb.value);
-    formData.append('twitter', this.state.partnerForm.twitter.value);
-    formData.append('website', this.state.partnerForm.website.value);
-    formData.append('email', this.state.profile.email);
-    formData.append('description', this.state.partnerForm.description.value);
+    formData.append("name", this.state.profile.name);
+    formData.append("avatar", this.state.profile.picture);
+    formData.append("prefferedName", this.state.partnerForm.name.value);
+    formData.append("bussinessType", this.state.partnerForm.type.value);
+    formData.append("customAvatar", this.state.customAvatar.file);
+    formData.append("fb", this.state.partnerForm.fb.value);
+    formData.append("twitter", this.state.partnerForm.twitter.value);
+    formData.append("website", this.state.partnerForm.website.value);
+    formData.append("email", this.state.profile.email);
+    formData.append("description", this.state.partnerForm.description.value);
 
     return formData;
   }
@@ -294,116 +244,31 @@ export class Profile extends Component {
   }
 
   render() {
-    const { profile } = this.state;
-    const formElementsArray = [];
-
-    const message = this.state.message.body ? (
-      <div className={this.state.message.success}>
-        {' '}
-        {this.state.message.body}{' '}
-      </div>
+    return this.props.auth.isEnabled() ? (
+      <>
+        {this.state.profile ? (
+          <ProfilePresentation
+            partnerForm={this.state.partnerForm}
+            profile={this.state.profile}
+            message={this.state.message}
+            loading={this.state.loading}
+            customAvatar={this.state.customAvatar}
+            formIsValid={this.state.formIsValid}
+            submitPartnerInfo={this.submitPartnerInfo}
+            onChangeAvatar={this.onChangeAvatar}
+            checkValidity={this.checkValidity}
+            onChangeHandler={(event, id, value) =>
+              this.onChangedHandler(event, id, value, this.checkValidity)
+            }
+            loadUserProfile={this.loadUserProfile}
+            auth={this.state.auth}
+          />
+        ) : null}
+      </>
     ) : (
-      ''
-    );
-
-    for (let key in this.state.partnerForm) {
-      formElementsArray.push({
-        id: key,
-        config: this.state.partnerForm[key]
-      });
-    }
-
-    // destructure the formElementsArray
-    const [name, type, description, fb, twitter, website] = formElementsArray;
-
-    const customAvatarFormControl = (
-      <div className='customAvatarWrapper'>
-        <h4> Custom avatar </h4>{' '}
-        <img
-          src={`${process.env.REACT_APP_API_URL}/uploads/avatars/${this.state.customAvatar.name}`}
-          alt=''
-        />
-        <input
-          type='file'
-          name='customAvatar'
-          onChange={this.onChangeAvatar.bind(this)}
-          accept='image/png, image/jpeg'
-        />
-      </div>
-    );
-
-    if (!profile) return null;
-    return (
-      <StyledWrapper>
-        <h1 className='admin-area-top-header'> Your Profile </h1>{' '}
-        <div className='admin-area-content-section'>
-          <p> Welcome, {profile.name} </p>{' '}
-          <p>
-            now you are ready to configure your profile and add some catalogs
-            connected to it.{' '}
-          </p>{' '}
-        </div>{' '}
-        <div className='editing admin-area-content-section'>
-          {' '}
-          {customAvatarFormControl}{' '}
-        </div>{' '}
-        <div className='editing admin-area-content-section'>
-          <h4> Your basic info </h4>{' '}
-          {[name, type, description].map(formElement => (
-            <Input
-              key={formElement.id}
-              elementType={formElement.config.elementType}
-              elementConfig={formElement.config.elementConfig}
-              value={formElement.config.value}
-              invalid={!formElement.config.valid}
-              shouldValidate={formElement.config.validation}
-              touched={formElement.config.touched}
-              changed={event =>
-                onChangedHandler.bind(
-                  this,
-                  event,
-                  formElement.id,
-                  'partnerForm',
-                  checkValidity
-                )()
-              }
-            />
-          ))}{' '}
-        </div>{' '}
-        <div className='editing admin-area-content-section last-child'>
-          <h4> Your social media </h4>{' '}
-          {[fb, twitter, website].map(formElement => (
-            <Input
-              key={formElement.id}
-              elementType={formElement.config.elementType}
-              elementConfig={formElement.config.elementConfig}
-              value={formElement.config.value}
-              invalid={!formElement.config.valid}
-              shouldValidate={formElement.config.validation}
-              touched={formElement.config.touched}
-              changed={event =>
-                onChangedHandler.bind(
-                  this,
-                  event,
-                  formElement.id,
-                  'partnerForm',
-                  checkValidity
-                )()
-              }
-            />
-          ))}{' '}
-        </div>{' '}
-        <div className='action'>
-          <Button
-            btnType='success'
-            clicked={() => this.submitPartnerInfo()}
-            disabled={!this.state.formIsValid || this.state.loading}
-          >
-            Save{' '}
-          </Button>{' '}
-          {message}{' '}
-        </div>{' '}
-      </StyledWrapper>
+      <Redirect to={"/admin"} />
     );
   }
 }
+
+export default withDashboard(Profile);

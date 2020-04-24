@@ -1,14 +1,18 @@
-import React from 'react';
-import styled from 'styled-components';
-import { FacebookShareButton, TwitterShareButton } from 'react-share';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFacebook, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import React from "react";
+import styled from "styled-components";
+import { FacebookShareButton, TwitterShareButton } from "react-share";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFacebook, faTwitter } from "@fortawesome/free-brands-svg-icons";
 
 const StyledWrapper = styled.div`
-  width: 900px;
+  width: 100%;
   margin: 40px auto;
   text-align: center;
   overflow: auto;
+  @media screen and (min-width: 992px) {
+    width: 992px;
+  }
+
   h4 {
     color: #aaa;
     font-size: 1.2rem;
@@ -36,23 +40,23 @@ const StyledWrapper = styled.div`
   }
 `;
 
-export const SocialButtons = props => {
+export const SocialButtons = (props) => {
   let url = `http://localhost:3002/catalog/${props.id}`;
 
   return (
     <StyledWrapper>
-      <h4> Share: </h4>{' '}
+      <h4> Share: </h4>{" "}
       <FacebookShareButton
-        className='facebook'
+        className="facebook"
         children={<FontAwesomeIcon icon={faFacebook} />}
         url={url}
-        btnType='fbShare'
+        btnType="fbShare"
       />
       <TwitterShareButton
-        className='twitter'
+        className="twitter"
         children={<FontAwesomeIcon icon={faTwitter} />}
         url={url}
-        btnType='fbShare'
+        btnType="fbShare"
       />
     </StyledWrapper>
   );

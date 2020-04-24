@@ -35,8 +35,11 @@ const StyledWrapper = styled.section`
 `;
 
 export class MagazineAbstract extends Component {
-  header;
-  background = '';
+  constructor() {
+    super();
+    this.header = '';
+    this.background = '';
+  }
 
   render() {
     if (this.props) {
@@ -54,8 +57,8 @@ export class MagazineAbstract extends Component {
             backgroundImage: `url(${this.background})`
           }}
         >
-          <h2> {this.header} </h2>
-        </div>
+          <h2> {this.header} </h2>{' '}
+        </div>{' '}
       </StyledWrapper>
     );
   }

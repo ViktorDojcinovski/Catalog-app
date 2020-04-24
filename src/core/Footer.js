@@ -1,12 +1,12 @@
-import React from 'react';
-import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from "react";
+import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFacebookSquare,
-  faTwitterSquare
-} from '@fortawesome/free-brands-svg-icons';
+  faTwitterSquare,
+} from "@fortawesome/free-brands-svg-icons";
 
-import { Logo } from '../common/Logo';
+import { Logo } from "../common/Logo";
 
 const StyledWrapper = styled.section`
   overflow: auto;
@@ -53,29 +53,29 @@ export function Footer() {
   return (
     <StyledWrapper>
       <ContentHolder>
-        <div className='container'>
-          <div className='row'>
+        <div className="container">
+          <div className="row">
             <Logo />
-            <div className='col-3'>
-              <h4> About </h4> <h6> Who are we </h6>{' '}
-            </div>{' '}
-            <div className='col-3'>
-              <h4> Privacy </h4> <h6> Privacy Policy </h6>{' '}
-              <h6> Terms and Conditions </h6>{' '}
-            </div>{' '}
-            <div className='col-2'>
-              <h4> Get social </h4>{' '}
-              <a className='social' href='https://facebook.com'>
-                <FontAwesomeIcon icon={faFacebookSquare} size='2x' />
-              </a>{' '}
-              <a className='social' href='https://twitter.com'>
-                <FontAwesomeIcon icon={faTwitterSquare} size='2x' />
-              </a>{' '}
-            </div>{' '}
-          </div>{' '}
-        </div>{' '}
-      </ContentHolder>{' '}
-      <CopyRightHolder> copyright katalozi.mk 2019 </CopyRightHolder>{' '}
+            <div className="col-lg-3 col-md-4 col-sm-12">
+              <h4> About </h4> <h6> Who are we </h6>{" "}
+            </div>{" "}
+            <div className="col-lg-3 col-md-4 col-sm-12">
+              <h4> Privacy </h4> <h6> Privacy Policy </h6>{" "}
+              <h6> Terms and Conditions </h6>{" "}
+            </div>{" "}
+            <div className="col-lg-2 col-md-4 col-sm-12">
+              <h4> Get social </h4>{" "}
+              <a className="social" href="https://facebook.com">
+                <FontAwesomeIcon icon={faFacebookSquare} size="2x" />
+              </a>{" "}
+              <a className="social" href="https://twitter.com">
+                <FontAwesomeIcon icon={faTwitterSquare} size="2x" />
+              </a>{" "}
+            </div>{" "}
+          </div>{" "}
+        </div>{" "}
+      </ContentHolder>{" "}
+      <CopyRightHolder> copyright katalozi.mk 2019 </CopyRightHolder>{" "}
     </StyledWrapper>
   );
 }

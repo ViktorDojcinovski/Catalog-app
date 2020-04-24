@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
+import React, { Component } from "react";
+import styled from "styled-components";
 
-import { Logo } from '../common/Logo';
-import { MainMenu } from '../common/MainMenu';
+import { Logo } from "../common/Logo";
+import { MainMenu } from "../common/MainMenu";
 
 const StyledWrapper = styled.div`
   background-color: rgba(255, 255, 255, 1);
@@ -12,8 +12,11 @@ const StyledWrapper = styled.div`
   margin: 0 auto;
   overflow: auto;
   > div {
-    width: 900px;
-    margin: 0 auto;
+    width: 100%;
+    @media screen and (min-width: 992px) {
+      width: 992px;
+      margin: 0 auto;
+    }
   }
 `;
 
@@ -24,9 +27,12 @@ const LogoHolder = styled.div`
 `;
 
 const MenuHolder = styled.div`
-  width: 600px;
-  margin: 0 auto;
-  float: left;
+  width: 100%;
+  @media screen and (min-width: 992px) {
+    width: 600px;
+    margin: 0 auto;
+    float: left;
+  }
 `;
 
 export class Header extends Component {
@@ -34,12 +40,12 @@ export class Header extends Component {
     super(props);
     this.toggle = this.toggle.bind(this);
     this.state = {
-      dropdownOpen: false
+      dropdownOpen: false,
     };
   }
   toggle() {
     this.setState({
-      loading: false
+      loading: false,
     });
   }
   render() {
@@ -48,12 +54,12 @@ export class Header extends Component {
         <div>
           <LogoHolder>
             <Logo />
-            <div style={{ clear: 'both' }} />{' '}
-          </LogoHolder>{' '}
+            <div style={{ clear: "both" }} />{" "}
+          </LogoHolder>{" "}
           <MenuHolder>
             <MainMenu />
-          </MenuHolder>{' '}
-        </div>{' '}
+          </MenuHolder>{" "}
+        </div>{" "}
       </StyledWrapper>
     );
   }

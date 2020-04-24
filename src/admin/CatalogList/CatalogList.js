@@ -1,22 +1,25 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 
-import { Auth } from '../Auth/Auth';
-import { CatalogListItem } from './components/CatalogListItem';
-import { Spinner } from '../components/UI/Spinner/Spinner';
-import { admin_uri } from '../../common/app.constants';
+import { Auth } from "../Auth/Auth";
+import { CatalogListItem } from "./components/CatalogListItem";
+import { Spinner } from "../components/UI/Spinner/Spinner";
+import { admin_uri } from "../../common/app.constants";
+import withDashboard from "../../hoc/withDashboard";
 
-export class CatalogList extends Component {
+class CatalogList extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       auth: new Auth(),
       partnerEmail: null,
-      error: false,
       catalogs: [],
-      loading: false
+      error: false,
+      loading: false,
     };
   }
+
   componentDidMount() {
     this.setState({ loading: true });
 
@@ -24,60 +27,59 @@ export class CatalogList extends Component {
       this.partnerEmail = profile.email;
 
       fetch(`${process.env.REACT_APP_API_URL}/admin/getCatalogs`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'content-type': 'application/json',
-          Authorization: `Bearer ${this.state.auth.getAccessToken()}`
+          "content-type": "application/json",
+          Authorization: `Bearer ${this.state.auth.getAccessToken()}`,
         },
-        body: JSON.stringify({ partnerEmail: this.partnerEmail })
+        body: JSON.stringify({ partnerEmail: this.partnerEmail }),
       })
-        .then(response => {
-          return response.json();
+        .then((response) => response.json())
+        .then((data) => {
+          this.setState({ error: false, loading: false, catalogs: data });
         })
-        .then(data => {
-          this.setState({ error: false, catalogs: data });
-          this.error = false;
-          this.setState({ loading: false });
-        })
-        .catch(error => {
+        .catch((error) => {
           this.setState({ error: true });
           console.error(error);
         });
     });
   }
+
   deleteCatalogHandler = (event, catalogId) => {
     event.preventDefault();
     fetch(`${process.env.REACT_APP_API_URL}/admin/deleteCatalog/`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'content-type': 'application/json',
-        Authorization: `Bearer ${this.state.auth.getAccessToken()}`
+        "content-type": "application/json",
+        Authorization: `Bearer ${this.state.auth.getAccessToken()}`,
       },
-      body: JSON.stringify({ catalogId: catalogId })
+      body: JSON.stringify({ catalogId: catalogId }),
     })
-      .then(response => {
+      .then((response) => {
         return response.json();
       })
-      .then(data => {
+      .then((data) => {
         this.setState({ catalogs: data });
       })
-      .catch(err => {
+      .catch((err) => {
         this.setState({ error: true });
         console.error(err);
       });
   };
+
   editCatalogHandler = (event, catalogId) => {
     event.preventDefault();
-    const queryString = 'catalogId=' + catalogId;
+    const queryString = "catalogId=" + catalogId;
     this.props.history.push({
       pathname: `/${admin_uri}/new-catalog`,
-      search: '?' + queryString,
-      state: { editMode: true }
+      search: "?" + queryString,
+      state: { editMode: true },
     });
   };
+
   render() {
     let content = this.state.error ? (
-      <p> Pages can 't be loaded! </p>
+      <p> Pages can't be loaded! </p>
     ) : (
       <Spinner />
     );
@@ -85,24 +87,29 @@ export class CatalogList extends Component {
     if (this.state.catalogs.length > 0) {
       content = (
         <div>
-          <h2 className='admin-area-top-header'> List of created catalogs </h2>{' '}
-          {this.state.catalogs.map(catalog => {
+          <h2 className="admin-area-top-header"> List of created catalogs </h2>{" "}
+          {this.state.catalogs.map((catalog) => {
             return (
               <CatalogListItem
                 key={catalog._id}
                 name={catalog.name}
-                deleteCatalog={e => this.deleteCatalogHandler(e, catalog._id)}
-                editCatalog={e => this.editCatalogHandler(e, catalog._id)}
+                deleteCatalog={(e) => this.deleteCatalogHandler(e, catalog._id)}
+                editCatalog={(e) => this.editCatalogHandler(e, catalog._id)}
               />
             );
-          })}{' '}
+          })}{" "}
         </div>
       );
     } else {
       if (!this.state.loading) {
         content = <div> No catalogs to list! </div>;
+      } else {
+        content = <Spinner />;
       }
     }
-    return content;
+
+    return this.props.auth.isEnabled() ? content : <Redirect to={"/admin"} />;
   }
 }
+
+export default withDashboard(CatalogList);

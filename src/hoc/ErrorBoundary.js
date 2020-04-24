@@ -1,13 +1,13 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import React from "react";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 
-import { Header } from '../core/Header';
-import { Footer } from '../core/Footer';
+import { Header } from "../core/Header";
+import { Footer } from "../core/Footer";
 
 const StyledContent = styled.div`
   height: calc(60vh - 235px);
-  width: 900px;
+  width: 992px;
   margin: 20vh auto;
   text-align: center;
 `;
@@ -37,11 +37,11 @@ export class ErrorBoundary extends React.Component {
           <Header />
           <StyledContent>
             <div>
-              <h1> Something went wrong. </h1>{' '}
-              <details style={{ whiteSpace: 'pre-wrap' }}></details>{' '}
-            </div>{' '}
-            <Link to={'/'}> Home </Link>{' '}
-          </StyledContent>{' '}
+              <h1> Something went wrong. </h1>{" "}
+              <details style={{ whiteSpace: "pre-wrap" }}></details>{" "}
+            </div>{" "}
+            <Link to={"/"}> Home </Link>{" "}
+          </StyledContent>{" "}
           <Footer />
         </>
       );

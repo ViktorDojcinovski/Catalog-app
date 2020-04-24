@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
+import React, { Component } from "react";
+import styled from "styled-components";
+import { NavLink } from "react-router-dom";
 
-import { AuthContext } from '../Auth/AuthContext';
-import { admin_uri } from '../../common/app.constants';
+import { AuthContext } from "../Auth/AuthContext";
+import { admin_uri } from "../../common/app.constants";
 
 const StyledWrapper = styled.div`
   padding: 10px 10px 0 10px;
@@ -20,6 +20,7 @@ const StyledList = styled.ul`
   height: 100%;
   overflow: auto;
   justify-content: flex-start;
+  margin: 0;
 `;
 const StyledListElement = styled.li`
   position: relative;
@@ -57,53 +58,67 @@ const StyledListElement = styled.li`
 export class MainAdminMenu extends Component {
   static contextType = AuthContext;
   render() {
-    const { isAuthenticated, login, logout } = this.context;
-
+    const {
+      isAuthenticated,
+      isSuperadmin,
+      isEnabled,
+      login,
+      logout,
+    } = this.context;
     return (
       <StyledWrapper>
         <StyledList>
           <StyledListElement>
-            <NavLink to={`/${admin_uri}`} exact activeClassName='is-active'>
-              Home{' '}
-            </NavLink>{' '}
-          </StyledListElement>{' '}
-          {isAuthenticated() && (
+            <NavLink to={`/${admin_uri}`} exact activeClassName="is-active">
+              Home
+            </NavLink>
+          </StyledListElement>
+          {isEnabled() && !isSuperadmin() && (
             <StyledListElement>
-              <NavLink to={`/${admin_uri}/profile`} activeClassName='is-active'>
-                Profile{' '}
-              </NavLink>{' '}
+              <NavLink to={`/${admin_uri}/profile`} activeClassName="is-active">
+                Profile
+              </NavLink>
             </StyledListElement>
-          )}{' '}
-          {isAuthenticated() && (
+          )}
+          {isEnabled() && !isSuperadmin() && (
             <StyledListElement>
               <NavLink
                 to={{
                   pathname: `/${admin_uri}/new-catalog`,
-                  state: { editMode: false }
+                  state: { editMode: false },
                 }}
-                activeClassName='is-active'
+                activeClassName="is-active"
               >
-                New Catalog{' '}
-              </NavLink>{' '}
+                New Catalog
+              </NavLink>
             </StyledListElement>
-          )}{' '}
-          {isAuthenticated() && (
+          )}
+          {isEnabled() && !isSuperadmin() && (
             <StyledListElement>
               <NavLink
                 to={`/${admin_uri}/catalog-list`}
-                activeClassName='is-active'
+                activeClassName="is-active"
               >
-                Catalog List{' '}
-              </NavLink>{' '}
+                Catalog List
+              </NavLink>
             </StyledListElement>
-          )}{' '}
+          )}
+          {isSuperadmin() && (
+            <StyledListElement>
+              <NavLink
+                to={`/${admin_uri}/partners-list`}
+                activeClassName="is-active"
+              >
+                Partners List
+              </NavLink>
+            </StyledListElement>
+          )}
           <StyledListElement>
             <button onClick={isAuthenticated() ? logout : login}>
-              {' '}
-              {isAuthenticated() ? 'Log Out' : 'Log In'}{' '}
-            </button>{' '}
-          </StyledListElement>{' '}
-        </StyledList>{' '}
+              {isAuthenticated() ? "Log Out" : "Log In"}
+            </button>
+          </StyledListElement>
+        </StyledList>
       </StyledWrapper>
     );
   }

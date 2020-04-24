@@ -1,18 +1,18 @@
-import React from "react";
-import { shallow } from "enzyme";
+import React from 'react';
+import { shallow } from 'enzyme';
 
-import Logo from "../Logo";
+import { Logo } from '../Logo';
 
-describe("Logo", () => {
+describe('<Logo />', () => {
   let mountedLogo;
-  beforeEach(() => {
+  beforeAll(() => {
     mountedLogo = shallow(<Logo />);
   });
-  it("renders without crashing", () => {
-    let mountedLogo = shallow(<Logo />);
+  it('renders without crashing', () => {
+    shallow(<Logo />);
   });
-  it("contains an image", () => {
-    const img = mountedLogo.find("img");
+  it('contains an image', () => {
+    const img = mountedLogo.find('img');
     expect(img.length).toBe(1);
   });
 });

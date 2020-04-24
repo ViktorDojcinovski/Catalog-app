@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { InputGroup, Input } from 'reactstrap';
 import styled from 'styled-components';
 
@@ -19,7 +20,11 @@ const StyledInputGroup = styled(InputGroup)`
 export function MainSearch(props) {
   return (
     <StyledInputGroup>
-      <Input placeholder='rapid filter' onChange={props.onSearchChange} />
+      <Input placeholder='rapid filter' onChange={props.onSearchChange} />{' '}
     </StyledInputGroup>
   );
 }
+
+MainSearch.propTypes = {
+  onSearchChange: PropTypes.func.isRequired
+};

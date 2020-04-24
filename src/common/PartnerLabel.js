@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const StyledWrapper = styled.section`
@@ -53,19 +54,27 @@ export function PartnerLabel(props) {
   let name, customAvatar;
   if (props) {
     name = !props.name ? 'Test phase header' : props.name;
-    customAvatar = !props.customAvatar
-      ? 'Test phase custom avatar'
-      : props.customAvatar;
+    customAvatar = !props.customAvatar ? null : props.customAvatar;
   }
   return (
     <StyledWrapper onClick={props.clicked}>
       <StyledImage
-        src={`${process.env.REACT_APP_API_URL}/uploads/avatars/${customAvatar}`}
-      />{' '}
+        src={
+          customAvatar
+            ? `${process.env.REACT_APP_API_URL}/uploads/avatars/${customAvatar}`
+            : 'https://via.placeholder.com/30'
+        }
+      />
       <StyledHeader className={props.isActive ? 'active' : ''}>
-        {' '}
-        {name}{' '}
-      </StyledHeader>{' '}
+        {name}
+      </StyledHeader>
     </StyledWrapper>
   );
 }
+
+PartnerLabel.propTypes = {
+  name: PropTypes.string.isRequired,
+  customAvatar: PropTypes.string.isRequired,
+  isActive: PropTypes.bool.isRequired,
+  clicked: PropTypes.func.isRequired
+};

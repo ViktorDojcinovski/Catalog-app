@@ -1,5 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import PropTypes from "prop-types";
+import styled from "styled-components";
 
 const StyledButton = styled.button`
   background-color: transparent;
@@ -26,14 +27,20 @@ const StyledButton = styled.button`
   }
 `;
 
-export const Button = props => {
+export const Button = (props) => {
   return (
     <StyledButton
       disabled={props.disabled}
       onClick={props.clicked}
       className={props.btnType}
     >
-      {props.children}
+      {props.children}{" "}
     </StyledButton>
   );
+};
+
+Button.propTypes = {
+  disabled: PropTypes.func,
+  onClick: PropTypes.func,
+  className: PropTypes.string,
 };

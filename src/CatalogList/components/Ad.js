@@ -1,14 +1,14 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-import ad_bg from '../../assets/bright-squares.png';
+import ad_bg from "../../assets/bright-squares.png";
 
 const StyledWrapper = styled.div`
   position: relative;
   border: 1px dashed #ccc;
   opacity: 0.7;
   &:after {
-    content: '';
+    content: "";
     background-image: url(${ad_bg});
     opacity: 0.4;
     top: 0;
@@ -20,7 +20,7 @@ const StyledWrapper = styled.div`
   }
   h2 {
     font-size: 20px;
-    font-family: 'Franklin Gothic Narrow', 'Arial Narrow', Arial, sans-serif;
+    font-family: "Franklin Gothic Narrow", "Arial Narrow", Arial, sans-serif;
     font-weight: normal;
     color: rgba(20, 20, 20, 0.4);
     position: absolute;
@@ -29,7 +29,7 @@ const StyledWrapper = styled.div`
     transform: translate(-50%, -50%);
 
     strong {
-      font-size: 28px;
+      font-size: 24px;
       font-weight: bold;
       color: white;
       background-color: rgba(136, 109, 177, 0.65);
@@ -53,14 +53,14 @@ const StyledWrapper = styled.div`
   }
 `;
 
-export const Ad = props => {
+export const Ad = (props) => {
   return (
     <StyledWrapper id={props.id}>
       <h2>
         PLACE FOR <br />
         <strong> YOUR AD </strong> <br />
-        HERE
-      </h2>
+        HERE{" "}
+      </h2>{" "}
     </StyledWrapper>
   );
 };

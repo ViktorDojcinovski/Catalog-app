@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 import styled from 'styled-components';
 
@@ -35,12 +36,17 @@ export class CatalogDatePicker extends React.Component {
   }
 
   render() {
-    const date = this.props.date;
+    const { date, label } = this.props;
     return (
       <DatePickerWrapper>
-        <label> {this.props.label} </label>
+        <label> {label} </label>
         <StyledDatePicker selected={date} onChange={this.handleChange} />
       </DatePickerWrapper>
     );
   }
 }
+
+CatalogDatePicker.propTypes = {
+  date: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired
+};

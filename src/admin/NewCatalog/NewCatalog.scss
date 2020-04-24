@@ -1,0 +1,86 @@
+section.newCatalog {
+  overflow: auto;
+  >div.editing {
+    margin-bottom: 10px;
+    &.basic-info,
+    &.drop-file {
+      display: inline-block;
+      vertical-align: top;
+      width: calc(50% - 10px);
+      margin-right: 10px;
+    }
+  }
+  >div.action {
+    button {
+      float: right;
+    }
+  }
+  div.reorderWrapper {
+    width: 100%;
+    margin: 40px auto;
+    min-height: 100px;
+    border: dashed 2px #d5dee4;
+    border-radius: 4px;
+    padding: 10px;
+    .list-item {
+      position: relative;
+      list-style: none;
+      border: 2px solid #eee;
+      border-radius: 4px;
+      margin-left: 4px;
+      float: none;
+      width: 100px;
+      height: 100px;
+      margin-bottom: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      display: inline-block;
+      &.dragged {
+        border: 2px solid #5497b1;
+        cursor: move;
+      }
+      &.placeholder {
+        width: 100px;
+        height: 100px;
+        background: #eee;
+        display: inline-block;
+        z-index: -1;
+      }
+      span {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background: rgba(200, 0, 0, 0.4);
+        color: white;
+        padding: 0 3px;
+        border: 1px solid #eee;
+        font-size: 12px;
+        &:hover {
+          background: rgba(200, 0, 0, 1);
+          cursor: pointer;
+        }
+      }
+      .imgPreview {
+        display: block;
+        width: auto;
+        height: 100%;
+        margin: 0 auto;
+      }
+    }
+  }
+  .dropzone {
+    text-align: center;
+    width: 100%;
+    padding: 20px;
+    border: 2px dashed lightblue;
+    margin: 20px 0;
+  }
+  div.datePickersWrapper {
+    width: 100%;
+    overflow: auto;
+  }
+  div.infoAreaWrapper {
+    width: 100%;
+    overflow: auto;
+  }
+}
